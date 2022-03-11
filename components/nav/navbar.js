@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import styles from "./navbar.module.css";
-
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-
-// import { magic } from "../../lib/magic-client";
+import { magic } from "../../lib/magic-client";
 
 const NavBar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -15,17 +13,16 @@ const NavBar = () => {
 
   useEffect(() => {
     (async () => {
-      console.log("iife");
-      // try {
-      //   const { email, issuer } = await magic.user.getMetadata();
-      //   const didToken = await magic.user.getIdToken();
-      //   if (email) {
-      //     setUsername(email);
-      //     setDidToken(didToken);
-      //   }
-      // } catch (error) {
-      //   console.error("Error retrieving email", error);
-      // }
+      try {
+        const { email, issuer } = await magic.user.getMetadata();
+        const didToken = await magic.user.getIdToken();
+        if (email) {
+          setUsername(email);
+          setDidToken(didToken);
+        }
+      } catch (error) {
+        console.error("Error retrieving email", error);
+      }
     })();
   }, []);
 
